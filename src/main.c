@@ -8,7 +8,10 @@ int main(int argc, char *args[])
 
     // -----------   constants   ---------
 
-    //       window context options
+    //   SDL init flags
+    const Uint32 SDL_INIT_FLAGS = SDL_INIT_VIDEO | SDL_INIT_TIMER;
+
+    //   window context options
     const char* WINDOW_TITLE = "Hello world";
     const int WINDOW_WIDTH = 640;
     const int WINDOW_HEIGHT = 480;
@@ -16,7 +19,7 @@ int main(int argc, char *args[])
     const int WINDOW_Y_POS = SDL_WINDOWPOS_CENTERED;
     const Uint32 WINDOW_FLAGS = 0;
 
-    //        delay option
+    //   delay option
     const int DELAY_TIME = 5000;
 
     // ------------------------------------
@@ -25,7 +28,7 @@ int main(int argc, char *args[])
     SDL_Window *window = NULL;
 
     // Initialise the sdl context
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) != 0)
+    if (SDL_Init(SDL_INIT_FLAGS) != 0)
     {
 
         // Print the error to the console
