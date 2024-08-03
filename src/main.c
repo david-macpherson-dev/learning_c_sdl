@@ -114,9 +114,26 @@ int main(int argc, char *args[])
         return 1;
     }
 
-    int x_pos = 0;
-    int y_pos = 0;
+    // Set the FPS
+    const int FPS = 120;
+
+    // Set the size of the circle
     int size = 20;
+
+    // Set the speed of the circle
+    const int SPEED = 300;
+
+    // Set the starting x pos of the circle
+    float x_pos = 0 + size;
+
+    // Set the starting y pos of the circle
+    float y_pos = 0 + size;
+
+    // Set the starting x velocity of the circle
+    float x_vel = SPEED;
+
+    // Set the starting y velocity of the circle
+    float y_vel = SPEED;
 
     // Store running value
     int running = 1;
@@ -127,6 +144,7 @@ int main(int argc, char *args[])
 
         // Store the SDL Event
         SDL_Event event;
+
         // Loop Polling the SDL events
         while (SDL_PollEvent(&event))
         {
@@ -137,6 +155,46 @@ int main(int argc, char *args[])
                 // Set the running value to 0 to exit
                 running = 0;
             }
+        }
+
+        // Check lower bounds of the x pos
+        if (x_pos <= 0 + size)
+        {
+            // Reset the x position
+            x_pos = 0 + size;
+
+            // Set the x velocity to negative
+            x_vel = -x_vel;
+        }
+
+        // Check the upper bounds of the x pos
+        if (x_pos >= WINDOW_WIDTH - size)
+        {
+            // Reset the x position
+            x_pos = WINDOW_WIDTH - size;
+
+            // Set the x velocity to negative
+            x_vel = -x_vel;
+        }
+
+        // Check lower bounds of the y pos
+        if (y_pos <= 0 + size)
+        {
+            // Reset the y position
+            y_pos = 0 + size;
+
+            // Set the y velocity to negative
+            y_vel = -y_vel;
+        }
+
+        // Check the upper bounds of the y pos
+        if (y_pos >= WINDOW_HEIGHT - size)
+        {
+            // Reset the y position
+            y_pos = WINDOW_HEIGHT - size;
+
+            // Set the y velocity to negative
+            y_vel = -y_vel;
         }
 
         // Reset the draw colour to black
@@ -154,12 +212,14 @@ int main(int argc, char *args[])
         // Present what is int the renderer
         SDL_RenderPresent(renderer);
 
-        // Set a delay of for 60fps
-        SDL_Delay(1000 / 60);
+        // Set the x pos
+        x_pos += x_vel / FPS;
 
-        // Increment the x_pos and y_pos by 1
-        x_pos += 1;
-        y_pos += 1;
+        // Set the y pos
+        y_pos += y_vel / FPS;
+
+        // Set a delay of for 60fps
+        SDL_Delay(1000 / FPS);
     }
 
     // Clean up the renderer
