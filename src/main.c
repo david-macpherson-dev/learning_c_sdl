@@ -14,7 +14,8 @@ void DrawCircle(SDL_Renderer *renderer, int32_t centreX, int32_t centreY, int32_
 
     while (x >= y)
     {
-        //  Each of the following renders an octant of the circle
+        // Each of the following renders an octant of the circle
+        // Link: https://wiki.libsdl.org/SDL2/SDL_RenderDrawPoint
         SDL_RenderDrawPoint(renderer, centreX + x, centreY - y);
         SDL_RenderDrawPoint(renderer, centreX + x, centreY + y);
         SDL_RenderDrawPoint(renderer, centreX - x, centreY - y);
@@ -69,6 +70,7 @@ int main(int argc, char *args[])
     SDL_Window *window = NULL;
 
     // Initialise the sdl context
+    //Link: https://wiki.libsdl.org/SDL2/SDL_Init
     if (SDL_Init(SDL_INIT_FLAGS) != 0)
     {
 
@@ -80,7 +82,7 @@ int main(int argc, char *args[])
     }
 
     // Inistalise the sdl window
-    // Link https://wiki.libsdl.org/SDL2/SDL_CreateWindow
+    // Link: https://wiki.libsdl.org/SDL2/SDL_CreateWindow
     window = SDL_CreateWindow(WINDOW_TITLE, WINDOW_X_POS, WINDOW_Y_POS, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_FLAGS);
 
     // Check if window is null
@@ -90,6 +92,7 @@ int main(int argc, char *args[])
         printf("error creating window: %s\n", SDL_GetError());
 
         // Quit SDL
+        // Link: https://wiki.libsdl.org/SDL2/SDL_Quit
         SDL_Quit();
 
         // Exit with an error code of 1 to indicate an error occured
@@ -97,6 +100,7 @@ int main(int argc, char *args[])
     }
 
     // Set up a renderer
+    // Link: https://wiki.libsdl.org/SDL2/SDL_CreateRenderer
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, RENDER_FLAGS);
 
     // Check if the renderer was created successfully
@@ -105,9 +109,11 @@ int main(int argc, char *args[])
         printf("error creating the renderer: %s\n", SDL_GetError());
 
         // We are now down tell SDL to clean up the window
+        // Link: https://wiki.libsdl.org/SDL2/SDL_DestroyWindow
         SDL_DestroyWindow(window);
 
         // Tell SDL to quit
+        // Link: https://wiki.libsdl.org/SDL2/SDL_Quit
         SDL_Quit();
 
         // Exit with an error code of 1 to indicate an error occured
@@ -146,6 +152,7 @@ int main(int argc, char *args[])
         SDL_Event event;
 
         // Loop Polling the SDL events
+        // Link: https://wiki.libsdl.org/SDL2/SDL_PollEvent
         while (SDL_PollEvent(&event))
         {
 
@@ -198,18 +205,22 @@ int main(int argc, char *args[])
         }
 
         // Reset the draw colour to black
+        // Link: https://wiki.libsdl.org/SDL2/SDL_SetRenderDrawColor
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 
         // Clear the renderer
+        // Link: https://wiki.libsdl.org/SDL2/SDL_RenderClear
         SDL_RenderClear(renderer);
 
         // Set the renderer colour to read
+        // Link: https://wiki.libsdl.org/SDL2/SDL_SetRenderDrawColor
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
         // Draw a cirle
         DrawCircle(renderer, x_pos, y_pos, size);
 
         // Present what is int the renderer
+        // Link: https://wiki.libsdl.org/SDL2/SDL_RenderPresent
         SDL_RenderPresent(renderer);
 
         // Set the x pos
@@ -219,16 +230,20 @@ int main(int argc, char *args[])
         y_pos += y_vel / FPS;
 
         // Set a delay of for 60fps
+        // Link: https://wiki.libsdl.org/SDL2/SDL_Delay
         SDL_Delay(1000 / FPS);
     }
 
     // Clean up the renderer
+    // Link: https://wiki.libsdl.org/SDL2/SDL_DestroyRenderer
     SDL_DestroyRenderer(renderer);
 
     // Clean up the window
+    // Link: https://wiki.libsdl.org/SDL2/SDL_DestroyWindow
     SDL_DestroyWindow(window);
 
     // Tell SDL to quit
+    // Link: https://wiki.libsdl.org/SDL2/SDL_Quit
     SDL_Quit();
 
     // Exit with an error code of 0
